@@ -1,0 +1,24 @@
+Notifications\Entity\Cycle:
+  type: entity
+  table: notificationsCycles
+  #    repositoryClass: Notifications\Repository\EmailThresholdRepository
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    delay:
+      type: smallint
+      nullable: false
+    display:
+      type: smallint
+      nullable: false
+    rankingFrom:
+      type: smallint
+      nullable: false
+    rankingTo:
+      type: smallint
+      nullable: false

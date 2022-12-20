@@ -1,0 +1,40 @@
+Settings\Entity\PositionVisibility:
+  type: entity
+  table: configurationPositionsVisibility
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    customers:
+      type: smallint
+      nullable: false
+    customersEdit:
+      type: smallint
+      nullable: false
+    customersPicker:
+      type: smallint
+      nullable: false
+    users:
+      type: smallint
+      nullable: false
+    orders:
+      type: smallint
+      nullable: false
+    monitorings:
+      type: smallint
+      nullable: false
+    commissions:
+      type: smallint
+      nullable: false
+    monitoringsFulfill:
+      type: smallint
+      nullable: false
+  manyToOne:
+    position:
+      targetEntity: Configuration\Entity\Position
+#      inversedBy: fields
+      joinColumns:
+        positionId:
+          referencedColumnName: id

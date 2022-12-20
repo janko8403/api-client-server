@@ -1,0 +1,15 @@
+<?php
+
+use Laminas\View\Renderer\PhpRenderer;
+
+/** @var PhpRenderer $this */
+
+echo $this->form($this->form ?? null);
+
+?>
+<style>
+    form#holidayDateForm.form-horizontal .form-group {
+        margin-right: 0;
+        margin-left: 0;
+    }
+</style>

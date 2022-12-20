@@ -1,0 +1,58 @@
+<?php
+
+use Customers\Service\AdditionalNotificationService;
+use Laminas\Form\Element\Checkbox;
+
+?>
+<?= $this->partial('customers/tabs') ?>
+
+<form
+        action="<?= $this->url('customers/additional-notifications', ['action' => 'save', 'id' => $this->urlParam('id')]) ?>"
+        method="post"
+>
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th><?= $this->translate('Przypomnienie o ocenie') ?></th>
+            <th><?= $this->translate('Wysyłka umowy') ?></th>
+            <th><?= $this->translate('Anulowanie umowy') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        foreach ($this->users as $user):
+            $uid = $user->getId();
+            ?>
+            <tr>
+                <td><?= $user->getFullname() ?></td>
+                <td>
+                    <?php
+                    $reminder = new Checkbox("notifications[$uid][" . AdditionalNotificationService::TYPE_GRADE_REMINDER . "]");
+                    $reminder->setChecked($this->notifications[$uid][AdditionalNotificationService::TYPE_GRADE_REMINDER]);
+                    echo $this->formCheckbox($reminder);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    $contract = new Checkbox("notifications[$uid][" . AdditionalNotificationService::TYPE_AGREEMENT_SEND . "]");
+                    $contract->setChecked($this->notifications[$uid][AdditionalNotificationService::TYPE_AGREEMENT_SEND]);
+                    echo $this->formCheckbox($contract);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    $contract = new Checkbox("notifications[$uid][" . AdditionalNotificationService::TYPE_REVOKE . "]");
+                    $contract->setChecked($this->notifications[$uid][AdditionalNotificationService::TYPE_REVOKE]);
+                    echo $this->formCheckbox($contract);
+                    ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <?php if ($this->users): ?>
+        <button type="submit" class="btn btn-sl pull-right"><?= $this->translate('Zapisz') ?></button>
+    <?php endif; ?>
+</form>

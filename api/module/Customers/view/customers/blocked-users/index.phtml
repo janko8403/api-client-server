@@ -1,0 +1,64 @@
+<?php
+$this->form->setAttributes([
+    'class' => 'form-inline',
+    'action' => $this->url('customers/blocked-users', ['action' => 'index', 'id' => $this->urlParam('id')]),
+    'id' => 'form-block-user',
+]);
+?>
+
+<div class="row">
+    <div class="col-md-12 mb-5">
+        <?=$this->form($form, null) ?>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th><?=$this->translate('ID') ?></th>
+                    <th><?=$this->translate('Imię i nazwisko') ?></th>
+                    <th><?=$this->translate('Data dodania') ?></th>
+                    <th><?=$this->translate('Dodał') ?></th>
+                    <th><?=$this->translate('Komentarz') ?></th>
+                    <th><?=$this->translate('Aktywny') ?></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Customers\Entity\BlockedUser $user */
+                foreach ($this->users as $user): ?>
+                    <tr>
+                        <td><?=$user->getPartner()->getId() ?></td>
+                        <td><?=$user->getPartner()->getFullName() ?></td>
+                        <td><?=$this->dt($user->getCreationDate()) ?></td>
+                        <td><?=$user->getAddingUser()->getFullName() ?></td>
+                        <td><?=$user->getComment() ?></td>
+                        <td><?=$this->chk($user->getIsActive()) ?></td>
+                        <td>
+                            <?php if ($user->getIsActive()): ?>
+                                <a
+                                    href="<?=$this->url('customers/blocked-users', ['action' => 'deactivate', 'id' => $user->getId()]) ?>"
+                                    class="btn btn-sl a-deactivate"
+                                ><?=$this->translate('Dezaktywuj') ?></a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php
+$this->headScript()->appendFile('/js/min/customers-blocked-users.js', 'text/javascript');
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    $(function() {
+        const blocked = new CustomersBlockedUsers()
+        blocked.init()
+    });
+JS;
+
+$this->inlineScript()->captureEnd();
+?>

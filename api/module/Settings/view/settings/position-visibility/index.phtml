@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-12">
+        <?=$this->operations([
+            [
+                'icon' => 'copy',
+                'label' => 'kopiuj uprawnienia',
+                'route' => 'settings/position-visibility/copy',
+            ],
+        ]) ?>
+    </div>
+</div>
+
+<?php
+    function getSelect(string $name, int $id, $visibility) {
+        $select = new \Laminas\Form\Element\Select('visibility[' . $id . '][' . $name . ']');
+        $select->setValueOptions(\Settings\Entity\PositionVisibility::getTypes());
+        $select->setAttribute('class', 'form-control');
+        if (isset($visibility[$id][$name])) {
+            $select->setValue($visibility[$id][$name]);
+        }
+
+        return $select;
+    }
+?>
+
+<form method="post" action="<?=$this->url('settings/position-visibility/save') ?>">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th><?=$this->translate('Stanowisko') ?></th>
+                        <th><?=$this->translate('Aktywne') ?></th>
+                        <th><?=$this->translate('Klienci') ?></th>
+                        <th><?=$this->translate('Klienci - edycja') ?></th>
+                        <th><?=$this->translate('Klienci - picker') ?></th>
+                        <th><?=$this->translate('Użytkownicy') ?></th>
+                        <th><?=$this->translate('Zamówienia') ?></th>
+                        <th><?=$this->translate('Monitoringi - widoczność') ?></th>
+                        <th><?=$this->translate('Monitoringi - wypełnienia') ?></th>
+                        <th><?=$this->translate('Zlecenia') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($this->positions as $position): ?>
+                        <tr>
+                            <td><?=$position->getName() ?></td>
+                            <td><?=$this->chk($position->getIsActive()) ?></td>
+                            <td>
+                                <?=$this->formSelect(getSelect('customers', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('customersEdit', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('customersPicker', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('users', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('orders', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('monitorings', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('monitoringsFulfill', $position->getId(), $this->visibility)) ?>
+                            </td>
+                            <td>
+                                <?=$this->formSelect(getSelect('commissions', $position->getId(), $this->visibility)) ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="11" class="text-right">
+                            <button type="submit" name="save" class="btn btn-sl"><?=$this->translate('Zapisz') ?></button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</form>

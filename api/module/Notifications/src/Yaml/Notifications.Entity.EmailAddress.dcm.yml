@@ -1,0 +1,26 @@
+Notifications\Entity\EmailAddress:
+    type: entity
+    table: emailAddress
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        mandantId:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            column: mandantId
+        address:
+            type: string
+            nullable: false
+            length: 100
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

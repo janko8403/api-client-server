@@ -1,0 +1,62 @@
+Hr\Entity\DictionaryDetails:
+  type: entity
+  table: dictionaryDetails
+  repositoryClass: Hr\Repository\DictionaryDetailsRepository
+  indexes:
+    FK_dictionaryDetails_dictionaryId:
+      columns:
+        - dictionaryId
+  id:
+    id:
+      type: integer
+      nullable: false
+      options:
+        unsigned: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    isactive:
+      type: boolean
+      nullable: false
+      options:
+        default: '1'
+      column: isActive
+    name:
+      type: string
+      nullable: false
+      length: 255
+      options:
+        fixed: false
+    key:
+      type: string
+      nullable: true
+      length: 255
+      column: '`key`'
+      options:
+        fixed: false
+  manyToOne:
+    dictionary:
+      targetEntity: Dictionary
+      cascade: { }
+      fetch: LAZY
+      mappedBy: null
+      inversedBy: null
+      joinColumns:
+        dictionaryId:
+          referencedColumnName: id
+      orphanRemoval: false
+    parent:
+      targetEntity: DictionaryDetails
+      inversedBy: children
+      joinColumns:
+        parentId:
+          referencedColumnName: id
+  oneToMany:
+    children:
+      targetEntity: DictionaryDetails
+      mappedBy: parent
+    descriptions:
+      targetEntity: DictionaryDetailsDescription
+      mappedBy: dictionaryDetail
+  lifecycleCallbacks: { }

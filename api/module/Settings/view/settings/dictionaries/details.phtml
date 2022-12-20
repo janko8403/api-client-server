@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12">
+        <?= $this->operations([
+            [
+                'icon' => 'plus',
+                'label' => 'dodaj',
+                'class' => 'a-add',
+                'route' => 'settings/dictionaries/add',
+                'params' => ['id' => $this->urlParam('id')],
+            ],
+        ]) ?>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-condensed table-striped">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Wartość') ?></th>
+                <th><?= $this->translate('Klucz') ?></th>
+                <th><?= $this->translate('Aktywne') ?></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($this->details as $detail): ?>
+                <tr>
+                    <td><?= $detail->getName() ?></td>
+                    <td><?= $detail->getKey() ? $detail->getKey() : '-' ?></td>
+                    <td><?= $this->chk($detail->getIsActive()) ?></td>
+                    <td>
+                        <a
+                                href="<?= $this->url('settings/dictionaries/edit', ['dictionary' => $this->urlParam('id'), 'id' => $detail->getId()]) ?>"
+                                title="<?= $this->translate('Edytuj') ?>"
+                                class="a-edit"
+                        ><?= $this->fontAwesome('pencil') ?></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    $(function() {
+        const dic = new Dictionaries();
+        dic.urlList = '{$this->url('settings/dictionaries/details', ['id' => $this->urlParam('id')])}';
+        dic.initEvents();
+    });
+JS;
+
+$this->inlineScript()->captureEnd();
+?>

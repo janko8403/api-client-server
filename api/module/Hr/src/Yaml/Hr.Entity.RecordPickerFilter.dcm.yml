@@ -1,0 +1,24 @@
+Hr\Entity\RecordPickerFilter:
+  type: entity
+  table: recordPickerFilter
+  repositoryClass: Hr\Repository\RecordPickerFilterRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    filterId:
+      type: string
+    records:
+      type: array
+    previousRecords:
+      type: array
+    creationDate:
+      type: datetime
+  manyToOne:
+    user:
+      targetEntity: Users\Entity\User
+      joinColumn:
+        name: userId
+        referencedColumnName: id

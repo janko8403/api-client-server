@@ -1,0 +1,25 @@
+Customers\Entity\UserRelationJoint:
+  type: entity
+  table: customerUserRelationJoint
+  repositoryClass: Customers\Repository\UserRelationJointRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  manyToOne:
+    customer:
+      targetEntity: Customer
+      joinColumns:
+        customerId:
+          referencedColumnName: id
+    user:
+      targetEntity: Users\Entity\User
+      joinColumns:
+        userId:
+          referencedColumnName: id
+    relation:
+      targetEntity: UserRelation
+      joinColumns:
+        relationId:
+          referencedColumnName: id

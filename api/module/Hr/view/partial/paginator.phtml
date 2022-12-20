@@ -1,0 +1,109 @@
+<?php
+if ($this->pageCount):
+    $recordsPerPage = new \Laminas\Form\Element\Select('recordsPerPage');
+    $recordsPerPage->setValueOptions(\Hr\Table\TableService::getRecordsPerPageList());
+    $recordsPerPage->setAttribute('id', 'recordsPerPage');
+    if (!empty($this->params['perPage'])) {
+        $recordsPerPage->setValue($this->params['perPage']);
+    }
+    $recordsPerPage->setAttribute('class', 'form-select-sm');
+    $routeParams = $this->routeParams ?? [];
+    ?>
+    <div class="row container-width data-footer mt-5">
+        <div class="col-md-12 mb-5 px-0 d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center gap-5">
+                <span>
+                    <?= $this->translate('Rekordów') ?>:
+                    <?= $this->totalItemCount ?>
+                </span>
+
+                <?php if (empty($this->hide_per_page)): ?>
+                    <div class="d-flex text-nowrap align-items-center gap-2">
+                        <?= $this->translate('Na stronę') ?>:
+                        <?= $this->formElement($recordsPerPage) ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <ul class="pagination pagination-sm">
+                <!-- Previous page link -->
+                <?php if (isset($this->previous)): ?>
+                    <li>
+                        <a
+                                href="<?php echo $this->url($this->route, $routeParams, ['query' => array_merge($this->params, ['page' => $this->first])]); ?>"
+                                class="page-link"
+                        >
+                            <i class="fa-solid fa-backward-fast"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a
+                                href="<?php echo $this->url($this->route, $routeParams, ['query' => array_merge($this->params, ['page' => $this->previous])]); ?>"
+                                class="page-link"
+                        >
+                            <i class="fa-solid fa-backward"></i>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">
+                            <i class="fa-solid fa-backward-fast"></i>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">
+                            <i class="fa-solid fa-backward"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <!-- Numbered page links -->
+                <?php foreach ($this->pagesInRange as $page): ?>
+                    <?php if ($page != $this->current): ?>
+                        <li class="page-item">
+                            <a
+                                    href="<?php echo $this->url($this->route, $routeParams, ['query' => array_merge($this->params, ['page' => $page])]); ?>"
+                                    class="page-link"
+                            >
+                                <?php echo $page; ?>
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="page-item active">
+                            <a href="#" class="page-link"><?php echo $page; ?></a>
+                        </li>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+
+                <!-- Next page link -->
+                <?php if (isset($this->next)): ?>
+                    <li class="page-item">
+                        <a
+                                href="<?php echo $this->url($this->route, $routeParams, ['query' => array_merge($this->params, ['page' => $this->next])]); ?>"
+                                class="page-link"
+                        >
+                            <i class="fa-solid fa-forward"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a
+                                href="<?php echo $this->url($this->route, $routeParams, ['query' => array_merge($this->params, ['page' => $this->last])]); ?>"
+                                class="page-link"
+                        >
+                            <i class="fa-solid fa-forward-fast"></i>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">
+                            <i class="fa-solid fa-forward"></i>
+                        </a>
+                    </li>
+                    <li class="page-item disabled">
+                        <a href="#" class="page-link">
+                            <i class="fa-solid fa-forward-fast"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

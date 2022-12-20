@@ -1,0 +1,73 @@
+<br/><br/>
+<div class="data-table">
+    <?php if (count($positions)) : ?>
+        <?php
+        $form = new \Laminas\Form\Form();
+        $form->setAttribute('action', '/configuration/saveResourcePositions/' . $this->resourceId);
+        $form->setAttribute('method', 'POST');
+        $form->setAttribute('id', 'editForm');
+        ?>
+        <?= $this->form()->openTag($form) ?>
+        <table class="table table-condensed table-hover" style="float:right">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Lp.') ?></th>
+                <th><?= $this->translate('Pozycja') ?></th>
+                <th><?= $this->translate('Telefon') ?></th>
+                <th><?= $this->translate('Tablet') ?></th>
+                <th><?= $this->translate('PC') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <?php foreach ($positions as $i => $p) : ?>
+                <tr>
+                    <td> <?= $i + 1 ?></td>
+                    <td> <?= $p->getName() ?></td>
+                    <td>
+                        <?php
+                        $check = new \Laminas\Form\Element\Checkbox(
+                            'answers[' . $p->getId() . '][' . "small" . ']',
+                            [
+                                'checked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_YES,
+                                'unchecked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_NO,
+                            ]
+                        );
+                        (empty($data[$p->getId()]['small'])) ?: $check->setValue($data[$p->getId()]['small']);
+
+                        ?>
+                        <?= $this->formElement($check) ?>
+                    </td>
+                    <td>
+                        <?php
+                        $check = new \Laminas\Form\Element\Checkbox(
+                            'answers[' . $p->getId() . '][' . "medium" . ']',
+                            [
+                                'checked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_YES,
+                                'unchecked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_NO,
+                            ]
+                        );
+                        (empty($data[$p->getId()]['medium'])) ?: $check->setValue($data[$p->getId()]['medium']);
+                        ?>
+                        <?= $this->formElement($check) ?></td>
+                    <td>
+                        <?php
+                        $check = new \Laminas\Form\Element\Checkbox(
+                            'answers[' . $p->getId() . '][' . "large" . ']',
+                            [
+                                'checked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_YES,
+                                'unchecked_value' => (string)\Configuration\Entity\ResourcePosition::SETTING_NO,
+                            ]
+                        );
+                        (empty($data[$p->getId()]['large'])) ?: $check->setValue($data[$p->getId()]['large']);
+                        ?>
+                        <?= $this->formElement($check) ?>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+
+            </tbody>
+        </table>
+        <?= $this->form()->closeTag($form); ?>
+    <?php endif; ?>
+</div>

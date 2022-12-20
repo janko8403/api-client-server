@@ -1,0 +1,23 @@
+Hr\Entity\PostCodeCoordinate:
+  type: entity
+  table: postCodeCoordinates
+  #    repositoryClass: Hr\Repository\DictionaryRepository
+  id:
+    id:
+      type: integer
+      nullable: false
+      options:
+        unsigned: true
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    code:
+      type: string
+      nullable: false
+    lat:
+      type: float
+      nullable: true
+    lng:
+      type: float
+      nullable: true

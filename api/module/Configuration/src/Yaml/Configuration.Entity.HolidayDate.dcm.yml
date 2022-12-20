@@ -1,0 +1,12 @@
+Configuration\Entity\HolidayDate:
+  type: entity
+  table: holidayDates
+  repositoryClass: Configuration\Repository\HolidayDateRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    date:
+      type: date

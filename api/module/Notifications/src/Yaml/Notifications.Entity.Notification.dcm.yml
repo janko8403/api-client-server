@@ -1,0 +1,33 @@
+Notifications\Entity\Notification:
+  type: entity
+  table: notifications
+  repositoryClass: Notifications\Repository\NotificationRepository
+  id:
+    id:
+      type: integer
+      nullable: false
+      options:
+        unsigned: false
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    type:
+      type: smallint
+      nullable: false
+    transport:
+      type: smallint
+      nullable: false
+    subject:
+      type: string
+      nullable: true
+    content:
+      type: string
+      nullable: false
+    params:
+      type: json
+      nullable: true
+  oneToMany:
+    recipients:
+      targetEntity: NotificationRecipient
+      mappedBy: notification

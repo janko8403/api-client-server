@@ -1,0 +1,37 @@
+<div class="col-md-12">
+    <form action="" method="post">
+        <button class="btn btn-sl">Pobierz współrzędnych: <?=$this->batch ?></button>
+    </form>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?php if ($this->data): ?>
+                <ul>
+                    <?php foreach ($this->data as $d): ?>
+                        <li>
+                            ID: <strong><?=$d['id'] ?></strong>
+                            :::
+                            <strong><?=$d['address'] ?></strong>
+                            :::
+                            <strong>
+                                <?=$d['lat'] ?>, <?=$d['lng'] ?>
+                            </strong>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+        <div class="col-md-6">
+            <?php if ($this->errors): ?>
+                <ul>
+                    <?php foreach ($this->errors as $e): ?>
+                        <li class="text-danger">
+                            <?=$e ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </div>
+    </div>
+</div>

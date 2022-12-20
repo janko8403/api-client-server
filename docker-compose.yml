@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: komfort/api
+    ports:
+      - 80:80
+    volumes:
+      - ./api:/srv/komfort
+      # - /srv/vendor
+  sap:
+    build:
+      context: .
+      dockerfile: Dockerfile.sap
+    image: komfort/sap
+    ports:
+      - 8080:80
+    volumes:
+      - ./sap:/srv/komfort
+#      - /srv/vendor
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile.front
+    image: komfort/front
+    ports:
+      - 3000:3000
+    volumes:
+      - ./front:/home/node/app
+      - /home/node/app/node_modules
+    command: npm start
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./custom.cnf:/etc/mysql/conf.d/custom.cnf
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+    volumes:
+      - ".docker/rabbit_enabled_plugins:/etc/rabbitmq/enabled_plugins"
+volumes:
+  mysql-data:

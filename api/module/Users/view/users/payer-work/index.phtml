@@ -1,0 +1,62 @@
+<?php
+$this->form_certificate->setAttribute('action', $this->url('users/payer-work/generate-certificate', ['id' => $this->urlParam('id')]));
+?>
+
+<?= $this->partial('users/tabs') ?>
+
+    <div class="row">
+        <div class="col-md-8">
+            <?php foreach ($this->list as $payer => $data): ?>
+                <h5><?= $payer ?></h5>
+
+                <ul class="list-unstyled">
+                    <?php /** @var \Users\Entity\PayerWork $d */
+                    foreach ($data as $d): ?>
+                        <li>
+                            <a
+                                    href="<?= $this->url('users/payer-work/delete', ['id' => $d->getId()]) ?>"
+                                    class="btn btn-xs btn-danger btn-delete"
+                            ><?= $this->fontAwesome('trash') ?></a>
+                            <strong>
+                                <?= $this->dt($d->getDateFrom(), \Hr\View\Helper\DateTime::DATE) ?>
+                                -
+                                <?= $this->dt($d->getDateTo(), \Hr\View\Helper\DateTime::DATE) ?>
+                            </strong>
+                            <?= $d->getHours() ?> <?= $this->translate('godz.') ?>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endforeach; ?>
+        </div>
+        <div class="col-md-2">
+            <h4><?= $this->translate('Dodaj godziny') ?></h4>
+            <?= $this->form($this->form, null) ?>
+        </div>
+        <div class="col-md-2">
+            <h4><?= $this->translate('Generuj zaświadczenie') ?></h4>
+            <?= $this->form($this->form_certificate, null) ?>
+        </div>
+    </div>
+
+<?php
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+$(function() {
+    $("#content").on("click", ".btn-delete", (e) => {
+        const href = $(e.currentTarget).attr('href');
+        
+        bootbox.confirm("Czy na pewno chcesz usunąć rekord?", (resp) => {
+            if (resp) {
+                $.post(href, (resp) => {
+                    if (resp === 'ok') {
+                        $("#content").load(location.href)
+                    } 
+                })
+            }
+        })
+        return false;
+    });
+});
+JS;
+$this->inlineScript()->captureEnd();

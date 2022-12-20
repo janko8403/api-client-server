@@ -1,0 +1,18 @@
+Settings\Entity\Dictionary:
+  type: entity
+  table: dictionaries
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      nullable: false
+    entityName:
+      type: string
+      nullable: false
+    isMultiLevel:
+      type: boolean
+      nullable: false

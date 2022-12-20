@@ -1,0 +1,16 @@
+Users\Entity\Department:
+  type: entity
+  table: departments
+  #  repositoryClass: Configuration\Repository\PositionRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      options:
+        collation: utf8_polish_ci
+    isActive:
+      type: boolean

@@ -1,0 +1,9 @@
+<?= $this->partial('customers/tabs') ?>
+
+<?= $this->form($this->form, null) ?>
+
+<script>
+    $(function () {
+        new AutocompleteSingle('user')
+    })
+</script>

@@ -1,0 +1,129 @@
+<?php
+
+use Features\Entity\User\Detail;
+
+function row(\Features\Entity\User\Feature $f, $secondary, $view)
+{
+    $bg = $secondary ? '' : 'table-success';
+    $style = $secondary ? 'font-size: 0.85em' : 'font-weight: bold';
+    $name = $secondary ? '' : $f->getFeature()->getName();
+    $eventName = $f->getEvent() ? $f->getEvent()->getName() : '-';
+
+    // get detail values
+    $values = $f->getDetails()->map(function (Detail $detail) use ($view) {
+        if ($detail->getDetail()) {
+            if ($detail->getDetail()->getType() == \Features\Entity\Detail::TYPE_PHOTO) {
+                return sprintf(
+                    '<a href="%s" target="_blank">pokaż</a>',
+                    $view->url('users/features', ['action' => 'show', 'id' => $detail->getId()])
+                );
+            } elseif ($detail->getDetail()->getId() == \Features\Entity\Detail::ID_STUDENT_EXP_DATE) {
+                return sprintf(
+                    '<a href="%s" class="a-edit-detail">%s %s</a>',
+                    $view->url('users/features', ['action' => 'edit', 'id' => $detail->getId()]),
+                    $view->fontAwesome('pencil'),
+                    $detail->getTextValue()
+                );
+            } elseif ($detail->getDetail()->getType() == \Features\Entity\Detail::TYPE_EXPIRATION_DATE) {
+                try {
+                    $dt = new \DateTime($detail->getTextValue());
+                } catch (\Exception $e) {
+                    // try parsing as timestamp
+                    $dt = new \DateTime();
+                    $dt->setTimestamp($detail->getTextValue());
+                }
+
+                return $view->dt($dt, \Hr\View\Helper\DateTime::DATE);
+            }
+        }
+
+        return $detail->getTextValue();
+    })->toArray();
+    $values = array_filter($values, function ($e) {
+        return !is_null($e);
+    });
+    $values = implode('<br>', $values);
+
+    // status label
+    if ($f->getStatus() == \Features\Entity\User\Feature::STATUS_DECLARATION) {
+        $statusLabel = sprintf(
+            '<a href="%s" class="a-change-status">%s%s</a>',
+            $view->url('users/features', ['action' => 'update', 'id' => $f->getId()]),
+            $view->fontAwesome('pencil'),
+            $f->getStatusName()
+        );
+    } else {
+        $statusLabel = $f->getStatusName();
+    }
+
+    return <<<HTML
+<tr class="{$bg}" style="{$style}">
+    <td>{$name}</td>
+    <td>{$values}</td>
+    <td>{$statusLabel}</td>
+    <td>{$f->getCreationDate()->format(\Hr\View\Helper\DateTime::DATETIME)}</td>
+    <td>{$f->getCreatingUser()->getFullName()}</td>
+    <td>{$eventName}</td>
+</tr>
+HTML;
+
+}
+
+$selectFeature = new \Laminas\Form\Element\Select('feature');
+$selectFeature->setEmptyOption('Wybierz cechę i jej wartość');
+$selectFeature->setValueOptions($this->features);
+
+$selectValue = new \Laminas\Form\Element\Select('value');
+$selectValue->setValueOptions(['1' => '1', '0' => '0']);
+?>
+
+<?= $this->partial('users/tabs') ?>
+
+    <form
+            class="form-inline"
+            method="post"
+            action="<?= $this->url('users/features', ['action' => 'add', 'id' => $this->urlParam('id')]) ?>"
+    >
+        <?= $this->formRow($selectFeature) ?>
+        <?= $this->formRow($selectValue) ?>
+        <button type="submit" class="btn btn-sl"><?= $this->translate('Dodaj') ?></button>
+    </form>
+
+    <hr>
+
+    <table class="table table-condensed">
+        <thead>
+        <tr>
+            <th><?= $this->translate('Cecha') ?></th>
+            <th><?= $this->translate('Wartość') ?></th>
+            <th><?= $this->translate('Status') ?></th>
+            <th><?= $this->translate('Data dodania') ?></th>
+            <th><?= $this->translate('Użytkownik') ?></th>
+            <th><?= $this->translate('Zdarzenie') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        /** @var \Features\Entity\User\Feature $f */
+        foreach ($this->userFeatures as $f) {
+            echo row($f, false, $this);
+
+            while ($prev = $f->getPreviousFeature()) {
+                echo row($prev, true, $this);
+                $f = $prev;
+            }
+        }
+        ?>
+        </tbody>
+    </table>
+
+<?php
+$this->headScript()->appendFile($this->basePath('js/min/features.js'));
+$this->inlineScript()->captureStart();
+echo <<<JS
+    $(function() {
+        const features = new Features()
+        features.init()
+    });
+JS;
+$this->inlineScript()->captureEnd();

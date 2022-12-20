@@ -1,0 +1,51 @@
+
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="mt-0"><?=$this->translate('Partner') ?></h3>
+        <dl class="dl-horizontal mb-20">
+            <dt><?=$this->translate('Imię i nazwisko') ?></dt>
+            <dd><?=$this->user->getFullName() ?></dd>
+
+            <dt><?=$this->translate('Telefon') ?></dt>
+            <dd><?=$this->user->getPhoneNumber() ?></dd>
+
+            <dt><?=$this->translate('Email') ?></dt>
+            <dd><?=$this->user->getEmail() ?></dd>
+        </dl>
+        <dl class="dl-horizontal mb-20">
+            <dt><?=$this->translate('Aktywna umowa') ?></dt>
+            <dd><?=$this->chk($this->stats['active_agreement']) ?></dd>
+
+            <dt><?=$this->translate('Zrealizowane zlecenia') ?></dt>
+            <dd><?=$this->stats['past_commissions'] ?></dd>
+
+            <dt><?=$this->translate('Przyszłe zlecenia') ?></dt>
+            <dd><?=$this->stats['future_commissions'] ?></dd>
+        </dl>
+
+        <?php if ($this->application): ?>
+            <div class="alert alert-danger">
+                <?=$this->translate('Dane partnera zostały już usunięte.') ?>
+            </div>
+        <?php elseif ($this->stats['future_commissions'] > 0): ?>
+            <div class="alert alert-danger">
+                <?=$this->translate('Partner ma przyjęte zlecenia. Nie można zamknąć jego konta.') ?>
+            </div>
+        <?php elseif ($this->stats['past_commissions'] > 0): ?>
+            <div class="alert alert-warning">
+                <?=$this->translate('Możliwe <strong>częściowe</strong> usunięcie danych partnera. Partner przyjmował zlecenia w przeszłości.') ?>
+            </div>
+        <?php else: ?>
+            <div class="alert alert-success">
+                <?=$this->translate('Możliwe <strong>pełne</strong> usunięcie danych partnera.') ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?php if (!$this->application && $this->stats['future_commissions'] == 0): ?>
+        <div class="col-md-6">
+            <h3 class="mt-0"><?=$this->translate('Wniosek') ?></h3>
+            <?=$this->form($this->form, null) ?>
+        </div>
+    <?php endif; ?>
+</div>

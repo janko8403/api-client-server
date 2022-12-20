@@ -1,0 +1,5 @@
+{
+    "require": {
+        "web64/laravel-cli-colors": "^0.20.0"
+    }
+}

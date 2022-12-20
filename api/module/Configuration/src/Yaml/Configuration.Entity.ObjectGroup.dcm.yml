@@ -1,0 +1,37 @@
+Configuration\Entity\ObjectGroup:
+  type: entity
+  table: configurationObjects
+  repositoryClass: Configuration\Repository\ObjectRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      options:
+        collation: utf8_polish_ci
+    type:
+      type: smallint
+    isActive:
+      type: boolean
+  oneToMany:
+    fields:
+      targetEntity: ObjectField
+      mappedBy: object
+      indexBy: name
+      orderBy: { 'sequence' : 'ASC' }
+      cascade: ['persist']
+  manyToMany:
+    resources:
+      targetEntity: Resource
+      inversedBy: objects
+      joinTable:
+        name: configurationObjectResources
+        joinColumns:
+          objectId:
+            referencedColumnName: id
+        inverseJoinColumns:
+          resourceId:
+            referencedColumnName: id

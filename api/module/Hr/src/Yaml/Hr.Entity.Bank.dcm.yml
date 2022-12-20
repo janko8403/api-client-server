@@ -1,0 +1,16 @@
+Hr\Entity\Bank:
+  type: entity
+  table: banks
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: true
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    code:
+      type: integer
+    name:
+      type: string

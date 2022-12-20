@@ -1,0 +1,6 @@
+<?php
+$select = new \Laminas\Form\Element\Select('status', [
+    'value_options' => $this->statuses
+]);
+$select->setAttribute('id', 'select-status');
+echo $this->formRow($select);

@@ -1,0 +1,34 @@
+Configuration\Entity\ObjectField:
+  type: entity
+  table: configurationObjectFields
+  repositoryClass: Configuration\Repository\ObjectFieldRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      options:
+        collation: utf8_polish_ci
+    label:
+      type: string
+      options:
+        collation: utf8_polish_ci
+    sequence:
+      type: smallint
+    isActive:
+      type: boolean
+  oneToMany:
+    details:
+      targetEntity: ObjectFieldDetail
+      mappedBy: field
+      cascade: ['persist']
+  manyToOne:
+    object:
+      targetEntity: ObjectGroup
+      inversedBy: fields
+      joinColumns:
+        objectId:
+          referencedColumnName: id

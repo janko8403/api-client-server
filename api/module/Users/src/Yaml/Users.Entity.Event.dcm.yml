@@ -1,0 +1,32 @@
+Users\Entity\Event:
+  type: entity
+  #  repositoryClass: Users\Repository\PasswordTokenRepository
+  table: userEvents
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      type: integer
+      nullable: false
+      options:
+        comment: '1 - telefon'
+    creationDate:
+      type: datetime
+      nullable: false
+    comment:
+      type: string
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: User
+      joinColumns:
+        userId:
+          referencedColumnName: id
+    creatingUser:
+      targetEntity: User
+      joinColumns:
+        creatingUserId:
+          referencedColumnName: id

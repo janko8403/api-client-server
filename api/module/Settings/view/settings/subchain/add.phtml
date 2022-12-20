@@ -1,0 +1,19 @@
+<?= $this->form($this->form, \TwbBundle\Form\View\Helper\TwbBundleForm::LAYOUT_HORIZONTAL) ?>
+<?php
+
+$autocompleteValues = $this->json($this->autocomplete_values ?? []);
+
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    $(function() {
+        var autocompleteData = {$autocompleteValues};
+        
+        new AutocompleteSingle('city', '{$this->url('autocomplete/dictionary', ['dictionary' => \Hr\Entity\Dictionary::DIC_CITIES])}', autocompleteData);
+        
+       
+       Utils.initExtendDictionaryButtons();
+    });
+JS;
+$this->inlineScript()->captureEnd();
+?>

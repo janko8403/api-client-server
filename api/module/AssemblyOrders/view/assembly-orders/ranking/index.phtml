@@ -1,0 +1,54 @@
+<?= $this->partial('assembly-orders/tabs') ?>
+
+<div class="d-flex justify-content-between align-items-center gap-2">
+    <a href="#" class="btn btn-secondary go-back"><?= $this->translate('Cofnij') ?></a>
+    <?= $this->form($this->form) ?>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th><?= $this->translate('Pozycja') ?></th>
+        <th><?= $this->translate('Użytkownik') ?></th>
+        <th><?= $this->translate('Data wyświetlenia') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php /** @var \AssemblyOrders\Entity\Ranking $ranking */
+    foreach ($this->ranking as $i => $ranking): ?>
+        <tr draggable="true">
+            <td><?= $ranking->getPosition() ?></td>
+            <td><?= $ranking->getUser()->getFullNameWithSAP() ?></td>
+            <td><?= $this->dt($ranking->getDisplayDate()) ?></td>
+            <td>
+                <a
+                        href="<?= $this->url('assembly-orders/rankings', ['action' => 'delete', 'id' => $ranking->getId()]) ?>"
+                        class="a-remove"
+                ><?= $this->fontAwesome('trash') ?></a>
+                <?php if ($i > 0): ?>
+                    <a href="<?= $this->url('assembly-orders/rankings', ['action' => 'move', 'id' => $ranking->getId()], ['query' => ['to' => $ranking->getPosition() - 1]]) ?>"><?= $this->fontAwesome('arrow-up') ?></a>
+                <?php endif; ?>
+                <?php if ($i < count($this->ranking) - 1): ?>
+                    <a href="<?= $this->url('assembly-orders/rankings', ['action' => 'move', 'id' => $ranking->getId()], ['query' => ['to' => $ranking->getPosition() + 1]]) ?>"><?= $this->fontAwesome('arrow-down') ?></a>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<script>
+    $(function () {
+        new AutocompleteSingle('user')
+
+        $(".a-remove").click((e) => {
+            e.preventDefault()
+            new Confirm($(e.currentTarget).attr('href'))
+        })
+
+        $("tr").on("drop", (e) => {
+            // e.preventDefault()
+            alert('a')
+        })
+    })
+</script>

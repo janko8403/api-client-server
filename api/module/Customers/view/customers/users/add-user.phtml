@@ -1,0 +1,9 @@
+<?= $this->partial('customers/tabs') ?>
+
+<?= $this->form($this->form, null) ?>
+
+<?php if ($this->urlParam('ommittable')): ?>
+    <div>
+        <a href="<?= $this->url('customers') ?>" class="btn btn-default"><?= $this->translate('Pomiń') ?></a>
+    </div>
+<?php endif; ?>

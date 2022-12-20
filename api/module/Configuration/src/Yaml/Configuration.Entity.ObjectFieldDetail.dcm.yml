@@ -1,0 +1,28 @@
+Configuration\Entity\ObjectFieldDetail:
+  type: entity
+  table: configurationObjectFieldDetails
+  repositoryClass: Configuration\Repository\ObjectFieldDetailRepository
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    settingSmall:
+      type: smallint
+    settingMedium:
+      type: smallint
+    settingLarge:
+      type: smallint
+  manyToOne:
+    field:
+      targetEntity: ObjectField
+      inversedBy: details
+      joinColumns:
+        fieldId:
+          referencedColumnName: id
+    position:
+      targetEntity: Position
+      joinColumns:
+        positionId:
+          referencedColumnName: id

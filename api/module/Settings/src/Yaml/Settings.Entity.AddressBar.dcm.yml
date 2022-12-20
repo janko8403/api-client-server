@@ -1,0 +1,12 @@
+Settings\Entity\AddressBar:
+  type: entity
+  table: configurationAddressBar
+  id:
+    name:
+      type: string
+      generator:
+        strategy: NONE
+  fields:
+    value:
+      type: text
+      length: 65535

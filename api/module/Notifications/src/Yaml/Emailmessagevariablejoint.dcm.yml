@@ -1,0 +1,59 @@
+Emailmessagevariablejoint:
+    type: entity
+    table: emailMessageVariableJoint
+    indexes:
+        mandantId:
+            columns:
+                - mandantId
+        FK_emailMessageContentJoint_emailMessageId:
+            columns:
+                - mandantId
+                - emailMessageId
+        FK_emailMessageContentJoint_emailMessageVariableId:
+            columns:
+                - mandantId
+                - emailMessageVariableId
+        FK_emailMessageVariableJoint_emailMessageId2:
+            columns:
+                - emailMessageId
+        FK_emailMessageVariableJoint_emailMessageVariableId2:
+            columns:
+                - emailMessageVariableId
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        mandantid:
+            type: smallint
+            nullable: false
+            options:
+                unsigned: true
+            column: mandantId
+    manyToOne:
+        emailmessagevariableid:
+            targetEntity: Emailmessagevariable
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                emailMessageVariableId:
+                    referencedColumnName: id
+            orphanRemoval: false
+        emailmessageid:
+            targetEntity: Emailmessage
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                emailMessageId:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

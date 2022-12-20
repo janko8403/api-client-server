@@ -1,0 +1,9 @@
+<?= $this->urlParam('action') == 'edit' ? $this->partial('assembly-orders/tabs') : '' ?>
+
+<?= $this->formSl($this->form, 'horizontal', 2) ?>
+
+<script>
+    $(function () {
+        new AutocompleteSingle('customer')
+    })
+</script>

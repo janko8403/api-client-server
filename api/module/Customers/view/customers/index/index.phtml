@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-12">
+        <?= $this->operations([
+            [
+                'icon' => 'plus',
+                'label' => 'dodaj',
+                'route' => 'customers/add',
+            ],
+        ]) ?>
+    </div>
+</div>
+
+<?= $this->searchForm($this->search) ?>
+
+<?= $this->table($this->table, 'customers') ?>
+
+<?php
+$autocompleteValues = $this->json($this->autocomplete_values ?? []);
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    $(function() {
+        const autocompleteData = {$autocompleteValues};
+    
+        new AutocompleteSingle('city', '{$this->url('autocomplete/dictionary', ['dictionary' => \Hr\Entity\Dictionary::DIC_CITIES])}', autocompleteData);
+        new Autocomplete('chain');
+        new Autocomplete('visitsFrequency');
+        new Autocomplete('region');
+        new Autocomplete('size');
+        new Autocomplete('subsizes');
+        new Autocomplete('priority');
+        new Autocomplete('format');
+        new Autocomplete('subformats');
+        new Autocomplete('logisticRegion');
+        new Autocomplete('creator');
+        new Autocomplete('subchain');
+        new Autocomplete('saleStage');
+        new Autocomplete('customerStatus');
+        Utils.setActivateEvents();
+        
+        const customers = new Customers()
+        customers.initList()
+    });
+JS;
+$this->inlineScript()->captureEnd();
+?>

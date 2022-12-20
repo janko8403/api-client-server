@@ -1,0 +1,17 @@
+Hr\Entity\Translation:
+  type: entity
+  table: translations
+  id:
+    id:
+      type: integer
+      options:
+        unsigned: true
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    key:
+      type: string
+      column: '`key`'
+    value:
+      type: string

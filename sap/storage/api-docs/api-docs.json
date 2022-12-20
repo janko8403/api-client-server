@@ -1,0 +1,943 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "KomfortIntegration Documentation",
+        "description": "OpenApi documentation for KomfortIntegration",
+        "contact": {
+            "email": "pawel@tikrow.com"
+        },
+        "version": "0.0.1"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api",
+            "description": "KomfortIntegration API Server"
+        }
+    ],
+    "paths": {
+        "/data": {
+            "post": {
+                "summary": "Post data",
+                "description": "Endpoint responsible for processing data",
+                "operationId": "postData",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PostDataRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successful"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
+        "create_assembly_order": {
+            "post": {
+                "tags": [
+                    "method: create_assembly_order"
+                ],
+                "summary": "Create new order",
+                "operationId": "060033b97097f7bb3e03624caa080840",
+                "requestBody": {
+                    "description": "Pass order data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idMeasurementOrder",
+                                    "idStore",
+                                    "creationDateTime",
+                                    "installationCity",
+                                    "installationAddress",
+                                    "installationName",
+                                    "estimatedCostNet",
+                                    "idUserRanking"
+                                ],
+                                "properties": {
+                                    "idMeasurementOrder": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    },
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "creationDateTime": {
+                                        "type": "timestamps",
+                                        "example": "2022-05-27 14:24:27"
+                                    },
+                                    "installationCity": {
+                                        "type": "string",
+                                        "example": "Warszawa"
+                                    },
+                                    "installationAddress": {
+                                        "type": "string",
+                                        "example": "Puławska 5"
+                                    },
+                                    "installationName": {
+                                        "type": "string",
+                                        "example": "Jan Kowalski"
+                                    },
+                                    "estimatedCostNet": {
+                                        "type": "integer",
+                                        "example": "5.55"
+                                    },
+                                    "idUserRanking": {
+                                        "type": "string",
+                                        "example": [
+                                            0,
+                                            1
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create_store": {
+            "post": {
+                "tags": [
+                    "method: create_store"
+                ],
+                "summary": "Create new store",
+                "operationId": "46ed5f173365b3c8644106fa7889d629",
+                "requestBody": {
+                    "description": "Pass store data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idStore",
+                                    "name",
+                                    "city",
+                                    "address",
+                                    "postalCode",
+                                    "phoneNumber",
+                                    "email",
+                                    "isActive"
+                                ],
+                                "properties": {
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Komfort"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Warszawa"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Puławska 5"
+                                    },
+                                    "postalCode": {
+                                        "type": "string",
+                                        "example": "00-000"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "455444444"
+                                    },
+                                    "email": {
+                                        "type": "emial",
+                                        "example": "jankowalski@test.pl"
+                                    },
+                                    "isActive": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create_user": {
+            "post": {
+                "tags": [
+                    "method: create_user"
+                ],
+                "summary": "Create new user",
+                "operationId": "aac5049600e51621b41b8312fa637bad",
+                "requestBody": {
+                    "description": "Pass user data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "idUser",
+                                    "type",
+                                    "email",
+                                    "phoneNumber",
+                                    "isActive"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Komfort"
+                                    },
+                                    "idUser": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Monter"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "example": "Jan"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": "Kowalski"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jankowalski@test.pl"
+                                    },
+                                    "npsValue": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "dailyProductivity": {
+                                        "type": "integer",
+                                        "example": "123"
+                                    },
+                                    "listOfCategory": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "48454433222"
+                                    },
+                                    "isActive": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "create_user_store": {
+            "post": {
+                "tags": [
+                    "method: create_user_store"
+                ],
+                "summary": "Create new user store",
+                "operationId": "54921c7d3335d007ad4f6e0d4eb14bb0",
+                "requestBody": {
+                    "description": "Pass user store data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idStore",
+                                    "idUser"
+                                ],
+                                "properties": {
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "idUser": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete_user_store": {
+            "post": {
+                "tags": [
+                    "method: delete_user_store"
+                ],
+                "summary": "Delete user store",
+                "operationId": "01e32d60168e7ce2f52d5b6d403fc10c",
+                "requestBody": {
+                    "description": "Pass user store data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idStore",
+                                    "idUser"
+                                ],
+                                "properties": {
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "idUser": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update_assembly_order": {
+            "post": {
+                "tags": [
+                    "method: update_assembly_order"
+                ],
+                "summary": "Update order",
+                "operationId": "98a192385fa2585e400cf5db0b1ccbe7",
+                "requestBody": {
+                    "description": "Pass update order data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idMeasurementOrder",
+                                    "idStore",
+                                    "creationDateTime",
+                                    "installationCity",
+                                    "installationAddress",
+                                    "installationName",
+                                    "estimatedCostNet",
+                                    "idUserRanking"
+                                ],
+                                "properties": {
+                                    "idMeasurementOrder": {
+                                        "type": "integer",
+                                        "example": "10"
+                                    },
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "creationDateTime": {
+                                        "type": "timestamps",
+                                        "example": "2022-05-27 14:24:27"
+                                    },
+                                    "installationCity": {
+                                        "type": "string",
+                                        "example": "Warszawa"
+                                    },
+                                    "installationAddress": {
+                                        "type": "string",
+                                        "example": "Puławska 5"
+                                    },
+                                    "installationName": {
+                                        "type": "string",
+                                        "example": "Jan Kowalski"
+                                    },
+                                    "estimatedCostNet": {
+                                        "type": "integer",
+                                        "example": "5.55"
+                                    },
+                                    "idUserRanking": {
+                                        "type": "string",
+                                        "example": [
+                                            0,
+                                            1
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update_store": {
+            "post": {
+                "tags": [
+                    "method: update_store"
+                ],
+                "summary": "Update store",
+                "operationId": "29b75a11485f98fbd7ee085cba992d24",
+                "requestBody": {
+                    "description": "Pass update store data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "idStore",
+                                    "name",
+                                    "city",
+                                    "address",
+                                    "postalCode",
+                                    "phoneNumber",
+                                    "email",
+                                    "isActive"
+                                ],
+                                "properties": {
+                                    "idStore": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Komfort"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Warszawa"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Puławska 5"
+                                    },
+                                    "postalCode": {
+                                        "type": "string",
+                                        "example": "00-000"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "455444444"
+                                    },
+                                    "email": {
+                                        "type": "emial",
+                                        "example": "jankowalski@test.pl"
+                                    },
+                                    "isActive": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "update_user": {
+            "post": {
+                "tags": [
+                    "method: update_user"
+                ],
+                "summary": "Update user",
+                "operationId": "1982278dabe1025b057e269bb60d1d99",
+                "requestBody": {
+                    "description": "Pass update user data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "idUser",
+                                    "type",
+                                    "email",
+                                    "phoneNumber",
+                                    "isActive"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Komfort"
+                                    },
+                                    "idUser": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Monter"
+                                    },
+                                    "firstName": {
+                                        "type": "string",
+                                        "example": "Jan"
+                                    },
+                                    "lastName": {
+                                        "type": "string",
+                                        "example": "Kowalski"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "jankowalski@test.pl"
+                                    },
+                                    "npsValue": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "dailyProductivity": {
+                                        "type": "integer",
+                                        "example": "123"
+                                    },
+                                    "listOfCategory": {
+                                        "type": "string",
+                                        "example": "ABC123"
+                                    },
+                                    "phoneNumber": {
+                                        "type": "string",
+                                        "example": "48454433222"
+                                    },
+                                    "isActive": {
+                                        "type": "integer",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The payload %payload% store field is required."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Payload": {
+                "title": "Action payload",
+                "description": "Action payload.",
+                "required": [
+                    "idUser",
+                    "type",
+                    "name",
+                    "email",
+                    "phoneNumber",
+                    "isActive",
+                    "idStore",
+                    "city",
+                    "address",
+                    "postalCode",
+                    "idMeasurementOrder",
+                    "creationDateTime",
+                    "installationCity",
+                    "installationAddress",
+                    "installationName",
+                    "idAssembly",
+                    "firstDisplayDateTime",
+                    "userFirstDisplayDateTime",
+                    "userAssignationDateTime",
+                    "userDemissionDateTime"
+                ],
+                "properties": {
+                    "idUser": {
+                        "title": "Id User",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "title": "Type",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "name": {
+                        "title": "Name",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "firstName": {
+                        "title": "First name",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "lastName": {
+                        "title": "Last name",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "email": {
+                        "title": "Email",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "npsValue": {
+                        "title": "NPS value",
+                        "type": "integer"
+                    },
+                    "dailyProductivity": {
+                        "title": "Daily productivity",
+                        "type": "integer"
+                    },
+                    "listOfCategory": {
+                        "title": "List of category",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "phoneNumber": {
+                        "title": "Number phone",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "isActive": {
+                        "title": "Is active",
+                        "type": "integer"
+                    },
+                    "idStore": {
+                        "title": "Id Shop",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "city": {
+                        "title": "City",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "address": {
+                        "title": "Address",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "postalCode": {
+                        "title": "Postal code",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idMeasurementOrder": {
+                        "title": "Id measurement order",
+                        "type": "integer"
+                    },
+                    "idInstallationOrder": {
+                        "title": "Id installation order",
+                        "type": "integer"
+                    },
+                    "idParentInstallationOrder": {
+                        "title": "Id parent installation order",
+                        "type": "integer"
+                    },
+                    "measurementStatus": {
+                        "title": "Measurement status",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationStatus": {
+                        "title": "Installation status",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "assemblyCreatorName": {
+                        "title": "Assembly creator name",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "creationDateTime": {
+                        "title": "Creation Datetime",
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true
+                    },
+                    "updateDateTime": {
+                        "title": "Update DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "deliveryDateTime": {
+                        "title": "Delivery DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "expectedContactDateTime": {
+                        "title": "Expected contact DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "expectedInstallationDateTime": {
+                        "title": "Expected installation DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "acceptedInstallationDateTime": {
+                        "title": "Accepted installation DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "floorCarpetMeters": {
+                        "title": "Floor carpet meters",
+                        "type": "integer"
+                    },
+                    "floorPanelMeters": {
+                        "title": "Floor panel meters",
+                        "type": "integer"
+                    },
+                    "floorWoodMeters": {
+                        "title": "Floor wood meters",
+                        "type": "integer"
+                    },
+                    "doorNumber": {
+                        "title": "Door number",
+                        "type": "integer"
+                    },
+                    "notificationEmail": {
+                        "title": "Notification email",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "estimatedCostNet": {
+                        "title": "Estimated cost net",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationCity": {
+                        "title": "Installation city",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationAddress": {
+                        "title": "Installation address",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationZipCode": {
+                        "title": "Installation zip code",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationName": {
+                        "title": "Installation name",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationPhoneNumber": {
+                        "title": "Installation phone number",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationEmail": {
+                        "title": "Installation email",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "installationNote": {
+                        "title": "Installation note",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idUserRanking": {
+                        "title": "Id user ranking (array)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "rankingPosition": {
+                        "title": "Ranking position (array)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "idAssembly": {
+                        "title": "Id assembly",
+                        "type": "integer"
+                    },
+                    "firstDisplayDateTime": {
+                        "title": "First display DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userFirstDisplayDateTime": {
+                        "title": "User first display DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userAssignationDateTime": {
+                        "title": "User assignation DateTime",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "userDemissionDateTime": {
+                        "title": "User demission DateTime",
+                        "type": "string",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PostDataRequest": {
+                "title": "Post data request",
+                "description": "Post data request body data",
+                "required": [
+                    "method",
+                    "payload"
+                ],
+                "properties": {
+                    "method": {
+                        "title": "method",
+                        "description": "API action to be executed",
+                        "type": "string",
+                        "example": "create_user|update_user|create_user_store|delete_user_store|create_store|update_store|create_assembly_order|update_assembly_order"
+                    },
+                    "payload": {
+                        "$ref": "#/components/schemas/Payload"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

@@ -1,0 +1,72 @@
+<style>
+    #customerTable {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-12">
+        <?= $this->operations([
+            [
+                'icon' => 'plus',
+                'label' => 'dodaj',
+                'route' => 'customers/add',
+            ],
+            [
+                'icon' => 'server',
+                'label' => 'template',
+                'route' => 'customers/template',
+            ],
+        ]) ?>
+    </div>
+</div>
+
+<?= $this->searchForm($this->search) ?>
+
+<?php if (!empty($this->queryParams())): ?>
+    <?= $this->table($this->table, 'customers/simple', false) ?>
+
+    <div class="mt-5">
+        <?= $this->pageSummary($this->table->getPaginator()) ?>
+    </div>
+<?php endif; ?>
+
+<?php
+$autocompleteValues = $this->json($this->autocomplete_values ?? []);
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    $(function() {
+        var autocompleteData = {$autocompleteValues};
+    
+        new AutocompleteSingle('city', '{$this->url('autocomplete/dictionary', ['dictionary' => \Hr\Entity\Dictionary::DIC_CITIES])}', autocompleteData);
+        new Autocomplete('chain');
+        new Autocomplete('visitsFrequency');
+        new Autocomplete('region');
+        new Autocomplete('size');
+        new Autocomplete('subsizes');
+        new Autocomplete('priority');
+        new Autocomplete('format');
+        new Autocomplete('subformats');
+        new Autocomplete('logisticRegion');
+        new Autocomplete('creator');
+        new Autocomplete('subchain');
+        new Autocomplete('saleStage');
+        new Autocomplete('customerStatus');
+        Utils.setActivateEvents();
+        
+        $("#customerTable > tbody > tr").click(function(e) {
+            if ($(e.target).is('td')) {
+                window.location = $(this).find('.a-details').attr('href');
+                return false;
+            }
+        });
+    });
+JS;
+$this->inlineScript()->captureEnd();
+?>

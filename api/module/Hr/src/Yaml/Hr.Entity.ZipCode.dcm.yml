@@ -1,0 +1,35 @@
+Hr\Entity\ZipCode:
+  type: entity
+  table: zipCodes
+  #    repositoryClass: Hr\Repository\DictionaryRepository
+  id:
+    id:
+      type: integer
+      nullable: false
+      options:
+        unsigned: true
+      id: true
+      generator:
+        strategy: IDENTITY
+  fields:
+    code:
+      type: string
+      nullable: false
+    city:
+      type: string
+      nullable: false
+    street:
+      type: string
+      nullable: true
+    streetNumbers:
+      type: string
+      nullable: true
+    community:
+      type: string
+      nullable: false
+    county:
+      type: string
+      nullable: false
+    province:
+      type: string
+      nullable: false

@@ -1,0 +1,45 @@
+<p>
+    Dostępne znaczniki: <br/>
+    <code>
+        <?php
+        $tagNames = [];
+        foreach ($this->tags as $tag) {
+            $tagNames[] = sprintf("[%s]", $tag);
+        }
+        echo implode(", ", $tagNames);
+        ?>
+    </code>
+</p>
+<p>Dodatkowo akceptowane są znaczniki zawierające wartość <em>key</em> z tabeli <em>userData</em>.</p>
+
+<?= $this->form($this->form, 'horizontal ') ?>
+
+<?php
+$tags = \Laminas\Json\Json::encode($this->tags);
+$this->headLink()->appendStylesheet($this->basePath('node_modules/summernote/dist/summernote-lite.min.css'));
+$this->headScript()->appendFile($this->basePath('node_modules/summernote/dist/summernote-lite.min.js'));
+$this->headScript()->appendFile($this->basePath('node_modules/summernote/dist/lang/summernote-pl-PL.js'));
+
+$this->inlineScript()->captureStart();
+echo <<<JS
+    $(function() {
+        $('.summernote').summernote({
+            height: 500,
+            lang: 'pl-PL',
+            hint: {
+                words: {$tags},
+                match: /\b(\w{1,})$/,
+                search: function (keyword, callback) {
+                    callback($.grep(this.words, function (item) {
+                        return item.indexOf(keyword) === 0;
+                    }));
+                },
+                content: function(item) {
+                    return "[" + item + "]";
+                }
+            }
+        });
+    });
+JS;
+$this->inlineScript()->captureEnd();
+?>

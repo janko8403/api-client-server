@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-condensed table-striped">
+            <thead>
+                <tr>
+                    <th><?=$this->translate('Nazwa') ?></th>
+                    <th><?=$this->translate('Wielopoziomowy') ?></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->dictionaries as $dictionary): ?>
+                    <tr>
+                        <td><?=$dictionary->getName() ?></td>
+                        <td><?=$this->chk($dictionary->getIsMultiLevel()) ?></td>
+                        <td>
+                            <a href="<?=$this->url('settings/dictionaries/details', ['id' => $dictionary->getId()]) ?>" title="<?=$this->translate('Szczegóły') ?>"><?=$this->fontAwesome('table') ?></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

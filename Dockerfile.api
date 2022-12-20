@@ -1,0 +1,37 @@
+FROM php:8.0-apache
+LABEL AUTHOR="Pawel Zawadzki"
+
+ARG user_id=1000
+RUN usermod -u $user_id www-data
+
+RUN apt-get update \
+    && apt-get install -y \
+    zlib1g-dev \
+    libicu-dev \
+    g++ \
+    libgd-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libzip-dev \
+    zip \
+    librabbitmq-dev \
+    libssh-dev \
+    libxml2-dev \
+    libssl-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd intl pdo pdo_mysql bcmath exif zip sockets soap \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp \
+    && a2enmod rewrite
+
+RUN sed -i "s|DEFAULT@SECLEVEL=2|DEFAULT@SECLEVEL=1|g" /etc/ssl/openssl.cnf
+
+COPY api /srv/komfort
+COPY vhost.conf /etc/apache2/sites-available/000-default.conf
+
+#RUN chown -R www-data:www-data /srv/hr \
+#  && chmod -R g+rw /srv/hr
+
+WORKDIR /srv/komfort

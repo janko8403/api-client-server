@@ -1,0 +1,12 @@
+<div id="map" style="width: 100%; height: 60vh;"></div>
+
+<script>
+    let center = {lat: parseFloat(<?=$this->lat ?>), lng: parseFloat(<?=$this->lng ?>)}
+
+    map = new google.maps.Map(document.getElementById('map'), {
+        center,
+        zoom: 15
+    })
+
+    let marker = new google.maps.Marker({position: center, map: map})
+</script>

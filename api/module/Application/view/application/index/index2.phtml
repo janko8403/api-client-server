@@ -1,0 +1,43 @@
+<?php //=$this->form($this->form, null) ?>
+
+    <p>
+        Hello from
+        <strong data-bind="text: language">todo</strong>
+        and
+        <strong data-bind="text: framework">todo</strong>
+        and
+        <strong data-bind="text: framework2">todo</strong>
+        !
+    </p>
+
+    <p><?= $this->translate('Język') ?>: <input data-bind="value: language"/></p>
+    <p>Framework: <input data-bind="value: framework"/></p>
+    <p>Lang2: <input data-bind="value: framework2"/></p>
+
+    <p>
+        <select name="miasta" id="miasta" multiple style="width: 200px;">
+            <option value="1">Warszawa</option>
+            <option value="2">Milanówek</option>
+            <option value="3">Grodzisk Maz.</option>
+            <option value="4">Wyszków</option>
+            <option value="5">Poznań</option>
+            <option value="6">Wrocław</option>
+            <option value="7">Gdańsk</option>
+            <option value="8">Gdynia</option>
+            <option value="9">Sopot</option>
+            <option value="10">Kraków</option>
+        </select>
+    </p>
+<?php
+$this->inlineScript()->captureStart();
+
+echo <<<JS
+    require(["/js/min/hello"]);
+
+    $(function() {
+        new Autocomplete('miasta', '{$this->url('application', ['action' => 'miasta'])}' );
+    });
+JS;
+
+$this->inlineScript()->captureEnd();
+?>

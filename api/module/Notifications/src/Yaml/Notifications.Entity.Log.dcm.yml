@@ -1,0 +1,27 @@
+Notifications\Entity\Log:
+  type: entity
+  table: notificationsLog
+  #    repositoryClass: Notifications\Repository\EmailThresholdRepository
+  id:
+    id:
+      type: integer
+      nullable: false
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      type: smallint
+      nullable: false
+    transport:
+      type: smallint
+      nullable: false
+    creationDate:
+      type: datetime
+      nullable: false
+  manyToOne:
+    user:
+      targetEntity: Users\Entity\User
+      joinColumns:
+        userId:
+          referencedColumnName: id

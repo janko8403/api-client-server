@@ -1,0 +1,30 @@
+<?php
+
+if (!isset($queryParams['sort'])) {
+    $queryParams['sort'] = [];
+}
+if (isset($queryParams['sort'][$this->field])) {
+    if ($queryParams['sort'][$this->field] == '') {
+        $chevron = '';
+    } else {
+        $chevron = $queryParams['sort'][$this->field] == 'asc' ? 'up' : 'down';
+    }
+    if ($queryParams['sort'][$this->field] == '') {
+        $queryParams['sort'][$this->field] = 'asc';
+    } else {
+        $queryParams['sort'][$this->field] = $queryParams['sort'][$this->field] == 'asc' ? 'desc' : '';
+    }
+} else {
+    $queryParams['sort'][$this->field] = 'asc';
+}
+
+if ($queryParams['sort'][$this->field] == '') {
+    unset($queryParams['sort'][$this->field]);
+}
+?>
+<a href="<?= $this->url($this->route, $this->params ?? [], ['query' => $queryParams]) ?>" style="white-space: nowrap">
+    <?= $this->label ?>
+    <?php if (!empty($chevron)): ?>
+        <em class="fa-solid fa-chevron-<?= $chevron ?>"></em>
+    <?php endif; ?>
+</a>

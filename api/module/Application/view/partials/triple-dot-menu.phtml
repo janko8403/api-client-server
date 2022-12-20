@@ -1,0 +1,20 @@
+<?php
+if (
+    $this->acl()->getAcl()->isAllowed($this->identity()['configurationPositionId'], Hr\Acl\AclService::HEADER_TRIPPLE_DOT)
+    && $this->placeholder('triple-dot-menu')->count()
+):
+    ?>
+    <div class="dropdown pull-right triple-dot-menu">
+        <button class="dropdown-toggle dropdown-img" type="button" data-toggle="dropdown">
+            <?= $this->fontAwesome('ellipsis-v', ['class' => 'fa-2x']) ?>
+        </button>
+        <?php
+        $this->placeholder('triple-dot-menu')
+            ->setPrefix("<ul class='dropdown-menu'><li>")
+            ->setSeparator("</li><li>")
+            ->setPostfix("</li></ul>");
+        ?>
+
+        <?= $this->placeholder('triple-dot-menu') ?>
+    </div>
+<?php endif; ?>
