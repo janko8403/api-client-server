@@ -1,4 +1,0 @@
-<form action="<?=$this->url('users/status', ['id' => $this->urlParam('id')]) ?>" class="text-center">
-    <button type="submit" class="btn btn-lg btn-success" value="<?=\Users\Entity\User::PROCESS_CONTACT_WAITING ?>"><?=$this->translate('Wypełni kwestionariusz') ?></button>
-    <button type="submit" class="btn btn-lg btn-danger" value="<?=\Users\Entity\User::PROCESS_CONTACT_NOT_INTERESTED ?>"><?=$this->translate('Niezainteresowany') ?></button>
-</form>

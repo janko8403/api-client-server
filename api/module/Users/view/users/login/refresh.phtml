@@ -1,8 +1,0 @@
-<div class="text-center">
-    <?php if (!$this->confirmed): ?>
-        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-        <h4><?=$this->translate('Oczekiwanie na akceptację...') ?></h4>
-    <?php else: ?>
-        <a href="<?=$this->url('users/login', ['action' => 'login', 'id' => $this->urlParam('id')]) ?>" class="btn btn-sl" id="btn-remote-login"><?=$this->translate('Zaloguj na konto partnera') ?></a>
-    <?php endif; ?>
-</div>

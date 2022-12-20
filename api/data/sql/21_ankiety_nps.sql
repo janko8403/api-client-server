@@ -1,2 +1,0 @@
-INSERT INTO `configurationResources` (`id`, `name`, `label`, `route`, `routeParams`, `icon`, `sequence`, `isUserMenu`, `isCustomerMenu`, `isHidden`, `settingSmall`, `settingMedium`, `settingLarge`, `parentId`, `cookie`, `monitoringCategoryId`, `isShortcutMenu`, `isUserDetailsMenu`) VALUES
-(null, 'mvc:npsrating', 'Ankiety NPS', 'nps-ratings', 's:0:\"\";', '', '99', '1', '0', '0', '1', '1', '1', NULL, '', NULL, '0', '0');
